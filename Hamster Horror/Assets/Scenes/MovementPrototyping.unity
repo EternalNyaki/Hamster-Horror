@@ -546,6 +546,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
+<<<<<<< Updated upstream
+=======
+  m_rigidbody: {fileID: 0}
+  m_prevOrientation: {x: 0, y: 0, z: 0, w: 0}
+>>>>>>> Stashed changes
   m_movementVector: {x: 0, y: 0, z: 0}
 --- !u!1 &1412530094
 GameObject:

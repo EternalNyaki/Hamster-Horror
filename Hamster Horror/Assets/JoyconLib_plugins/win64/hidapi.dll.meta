@@ -1,4 +1,5 @@
 fileFormatVersion: 2
+<<<<<<< Updated upstream
 guid: 212fb7dffa1af79458813902bce8316e
 timeCreated: 1428204958
 licenseType: Free
@@ -78,3 +79,6 @@ PluginImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+=======
+guid: 212fb7dffa1af79458813902bce8316e
+>>>>>>> Stashed changes
