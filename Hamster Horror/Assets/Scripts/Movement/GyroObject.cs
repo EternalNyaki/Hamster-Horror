@@ -8,11 +8,14 @@ public class GyroObject : MonoBehaviour
 
     private Rigidbody m_rigidbody;
 
+    private Quaternion m_prevOrientation;
+
     [SerializeField] private Vector3 m_movementVector;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        //Get component references
         m_rigidbody = GetComponent<Rigidbody>();
 
         if (JoyconManager.Instance.j.Count <= 0)
@@ -21,6 +24,7 @@ public class GyroObject : MonoBehaviour
             Destroy(gameObject);
         }
 
+        //Get joycon reference
         m_joycon = JoyconManager.Instance.j[0];
         m_joycon.Recenter();
     }
@@ -33,15 +37,44 @@ public class GyroObject : MonoBehaviour
 
     void FixedUpdate()
     {
-        transform.rotation = Quaternion.Euler(90f, 0f, 0f) * m_joycon.GetVector();
+        //Set velocity and orientation
+        m_rigidbody.linearVelocity = GetVelocityQuaternionMethod();
+        transform.rotation = GetTrueOrientation();
 
-        float theta = Mathf.Deg2Rad * transform.rotation.eulerAngles.y;
-        float gyroX = m_joycon.GetGyro().x;
-        float gyroZ = -m_joycon.GetGyro().y;
-        float x = gyroX * Mathf.Cos(theta) - gyroZ * Mathf.Sin(theta);
-        float y = gyroX * Mathf.Sin(theta) + gyroZ * Mathf.Cos(theta);
-        Vector2 velocityOverGround = new Vector2(x, y) * speed;
-        Vector3 velocity = new(velocityOverGround.x, m_rigidbody.linearVelocity.y, velocityOverGround.y);
-        m_rigidbody.linearVelocity = velocity;
+        m_prevOrientation = GetTrueOrientation();
     }
+
+    /// <summary>
+    /// Corrects the joycon orientation by rotating it 90 degrees about the x-axis
+    /// </summary>
+    /// <returns></returns>
+    public Quaternion GetTrueOrientation()
+    {
+        return Quaternion.Euler(90f, 0f, 0f) * m_joycon.GetVector();
+    }
+
+    private Vector3 GetVelocityQuaternionMethod()
+    {
+        //Get change in rotation as a quaternion
+        Quaternion delta = GetTrueOrientation() * Quaternion.Inverse(m_prevOrientation);
+
+        delta.ToAngleAxis(out float angle, out Vector3 axis);
+        float smoothAngle = angle < 360 - angle ? angle : 360 - angle;
+        Vector3 groundNormal = Vector3.up;
+
+        //Cross product of axis of rotation and normal vector with the ground
+        Vector3 direction = Vector3.Cross(axis, groundNormal);
+        Vector3 velocityOverGround = direction * smoothAngle * speed;
+
+        //HACK: Currently hard-coded for flat ground
+        return new(velocityOverGround.x, m_rigidbody.linearVelocity.y, velocityOverGround.z);
+    }
+
+#if UNITY_EDITOR
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawLine(transform.position, transform.position + (m_movementVector / Time.fixedDeltaTime));
+    }
+#endif
 }
