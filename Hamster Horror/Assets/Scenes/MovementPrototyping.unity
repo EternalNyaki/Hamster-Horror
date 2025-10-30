@@ -733,6 +733,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
+  animator: {fileID: 0}
   m_movementVector: {x: 0, y: 0, z: 0}
 --- !u!114 &1154856224
 MonoBehaviour:
