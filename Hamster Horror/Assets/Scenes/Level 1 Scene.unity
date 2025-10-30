@@ -22064,7 +22064,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1340254433}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 15c56ea981245bf45b23313b34d8ec4a, type: 3}
   m_Name: 
@@ -37340,9 +37340,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1340254440}
-  positionOffset: {x: -5, y: 1.5, z: 0}
+  positionOffset: {x: 3, y: 1, z: 0}
   angleOffset: -90
-  lockRotation: 0
+  lockRotation: 1
 --- !u!114 &2110972580
 MonoBehaviour:
   m_ObjectHideFlags: 0
