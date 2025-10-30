@@ -1,9 +1,7 @@
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
-public class TitleToMainLevel : MonoBehaviour
+public class DeadToLevel : MonoBehaviour
 {
 
     public string Level1Scene; 
@@ -24,18 +22,5 @@ public class TitleToMainLevel : MonoBehaviour
     public void switchtogame()
     {
       SceneManager.LoadScene(Level1Scene);
-    }
-
-
-    // Call this function to quit the application
-    public void QuitGame()
-    {
-        // If running in the Unity Editor
-    #if UNITY_EDITOR
-        EditorApplication.isPlaying = false;
-    // If running as a standalone build
-    #else
-        Application.Quit();
-    #endif
     }
 }
