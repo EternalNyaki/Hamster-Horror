@@ -42,7 +42,7 @@ namespace NodeCanvas.Tasks.Conditions
 		{
 			Vector3 vectorToTarget = target.value.position - agent.transform.position;
 
-			return Physics.Raycast(agent.transform.position, vectorToTarget, vectorToTarget.magnitude, blockVisionLayers.value);
+			return !Physics.Raycast(agent.transform.position, vectorToTarget, vectorToTarget.magnitude, blockVisionLayers.value);
 		}
 	}
 }
