@@ -37,7 +37,7 @@ public class GyroObject : MonoBehaviour
     {
         animator.SetFloat("runSpeed", m_rigidbody.linearVelocity.magnitude);
 
-        if (m_rigidbody.linearVelocity.x > 0f || m_rigidbody.linearVelocity.y > 0f)
+        if (m_rigidbody.linearVelocity.x >= 1f || m_rigidbody.linearVelocity.y >= 1f || m_rigidbody.linearVelocity.x <= -1f || m_rigidbody.linearVelocity.y <= -1f)
         {
             animator.SetBool("Run", true);
             animator.SetBool("Idle", false);
