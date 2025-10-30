@@ -4,7 +4,7 @@ public class GyroObject : MonoBehaviour
 {
     public float speed = 1 / 90;
     public Animator animator;
-
+    public GameObject hamster;
     private Joycon m_joycon;
 
     private Rigidbody m_rigidbody;
@@ -29,7 +29,7 @@ public class GyroObject : MonoBehaviour
         m_joycon = JoyconManager.Instance.j[0];
         m_joycon.Recenter();
 
-         animator = GetComponent<Animator>();
+        animator = hamster.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -37,7 +37,7 @@ public class GyroObject : MonoBehaviour
     {
         animator.SetFloat("runSpeed", m_rigidbody.linearVelocity.magnitude);
 
-        if (m_rigidbody.linearVelocity.x > 0f || m_rigidbody.linearVelocity.y > 0f)
+        if (m_rigidbody.linearVelocity.x >= 1f || m_rigidbody.linearVelocity.y >= 1f || m_rigidbody.linearVelocity.x <= -1f || m_rigidbody.linearVelocity.y <= -1f)
         {
             animator.SetBool("Run", true);
             animator.SetBool("Idle", false);
@@ -55,6 +55,9 @@ public class GyroObject : MonoBehaviour
         //Set velocity and orientation
         m_rigidbody.linearVelocity = GetVelocityQuaternionMethod();
         transform.rotation = GetTrueOrientation();
+
+        hamster.transform.position = transform.position;
+        hamster.transform.rotation = Quaternion.Euler(hamster.transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, hamster.transform.rotation.eulerAngles.z);
 
         m_prevOrientation = GetTrueOrientation();
 
