@@ -3,6 +3,7 @@ using UnityEngine;
 public class GyroObject : MonoBehaviour
 {
     public float speed = 1 / 90;
+    public Animator animator;
 
     private Joycon m_joycon;
 
@@ -27,11 +28,25 @@ public class GyroObject : MonoBehaviour
         //Get joycon reference
         m_joycon = JoyconManager.Instance.j[0];
         m_joycon.Recenter();
+
+         animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        animator.SetFloat("runSpeed", m_rigidbody.linearVelocity.magnitude);
+
+        if (m_rigidbody.linearVelocity.x > 0f || m_rigidbody.linearVelocity.y > 0f)
+        {
+            animator.SetBool("Run", true);
+            animator.SetBool("Idle", false);
+        }
+        else
+        {
+            animator.SetBool("Run", false);
+            animator.SetBool("Idle", true);
+        }
 
     }
 
@@ -42,6 +57,7 @@ public class GyroObject : MonoBehaviour
         transform.rotation = GetTrueOrientation();
 
         m_prevOrientation = GetTrueOrientation();
+
     }
 
     /// <summary>
