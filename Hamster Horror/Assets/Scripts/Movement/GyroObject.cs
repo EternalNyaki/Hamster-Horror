@@ -4,7 +4,7 @@ public class GyroObject : MonoBehaviour
 {
     public float speed = 1 / 90;
     public Animator animator;
-
+    public GameObject hamster;
     private Joycon m_joycon;
 
     private Rigidbody m_rigidbody;
@@ -29,7 +29,7 @@ public class GyroObject : MonoBehaviour
         m_joycon = JoyconManager.Instance.j[0];
         m_joycon.Recenter();
 
-         animator = GetComponent<Animator>();
+         animator = hamster.GetComponent<Animator>();
     }
 
     // Update is called once per frame
