@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2531903181112589567}
   - component: {fileID: 3420596605074539061}
   m_Layer: 0
-  m_Name: PLACEABLE light
+  m_Name: GreenPlacable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -68,7 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 89413cc1d21786845996cd21fd210dae, type: 2}
+  - {fileID: 2100000, guid: dab1f5005114b3f4b852bb0a4a960c22, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
