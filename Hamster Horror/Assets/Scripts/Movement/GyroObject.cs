@@ -58,6 +58,11 @@ public class GyroObject : MonoBehaviour
         return Quaternion.AngleAxis(transform.rotation.eulerAngles.y, Vector3.up) * GetTrueOrientation();
     }
 
+    public Quaternion GetRotationDelta()
+    {
+        return GetTrueOrientation() * Quaternion.Inverse(m_prevOrientation);
+    }
+
     private Vector3 GetVelocityQuaternionMethod()
     {
         //Get change in rotation as a quaternion
