@@ -29505,6 +29505,7 @@ MonoBehaviour:
   speed: 1
   animator: {fileID: 1841896714}
   hamster: {fileID: 1772002661}
+  hamsterOffset: {x: 0, y: -0.1, z: 0}
   m_movementVector: {x: 0, y: 0, z: 0}
 --- !u!114 &1340254435
 MonoBehaviour:
