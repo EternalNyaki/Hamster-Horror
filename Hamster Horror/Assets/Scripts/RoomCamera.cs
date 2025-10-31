@@ -12,13 +12,13 @@ public class RoomCamera : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        m_camera = GetComponent<Camera>();
+        m_camera = GetComponentInChildren<Camera>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.LookAt(m_lookTarget);
+        m_camera.transform.LookAt(m_lookTarget);
     }
 
     void OnTriggerEnter(Collider other)
