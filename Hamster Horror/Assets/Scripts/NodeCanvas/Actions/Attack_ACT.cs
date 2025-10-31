@@ -1,36 +1,24 @@
 using NodeCanvas.Framework;
 using ParadoxNotion.Design;
 using UnityEngine;
-using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 
 namespace NodeCanvas.Tasks.Actions
 {
 
-	public class Chase_ACT : ActionTask
+	public class Attack_ACT : ActionTask
 	{
-		public BBParameter<Transform> target;
-		public float sampleInterval;
-		public float targetReachedDistance;
 
-		public BBParameter<Vector3> destination;
-
-		private float m_timeSinceLastSample;
-
-		private NavMeshAgent m_navAgent;
-
+		public Vector3 hitboxPosition;
+		public float hitboxRadius;
+		public BBParameter<LayerMask> playerLayers;
+		public string gameOverScene;
 
 		//Use for initialization. This is called only once in the lifetime of the task.
 		//Return null if init was successfull. Return an error string otherwise
 		protected override string OnInit()
 		{
-			if (!destination.useBlackboard)
-			{
-				Debug.LogError("Destination must be a blackboard variable");
-			}
-
-			m_navAgent = agent.GetComponent<NavMeshAgent>();
-
 			return null;
 		}
 
@@ -39,25 +27,19 @@ namespace NodeCanvas.Tasks.Actions
 		//EndAction can be called from anywhere.
 		protected override void OnExecute()
 		{
+			var colliders = Physics.OverlapSphere(agent.transform.position + hitboxPosition, hitboxRadius, playerLayers.value);
+			if (colliders.Length > 0)
+			{
+				SceneManager.LoadScene(gameOverScene);
+			}
 
+			EndAction(true);
 		}
 
 		//Called once per frame while the action is active.
 		protected override void OnUpdate()
 		{
-			if (m_navAgent.hasPath && m_navAgent.remainingDistance < targetReachedDistance)
-			{
-				destination.value = agent.transform.position;
-				EndAction();
-			}
 
-			m_timeSinceLastSample += Time.deltaTime;
-
-			if (m_timeSinceLastSample < sampleInterval) { return; }
-
-			destination.value = target.value.position;
-
-			m_timeSinceLastSample -= sampleInterval;
 		}
 
 		//Called when the task is disabled.
